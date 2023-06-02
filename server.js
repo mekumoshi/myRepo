@@ -3,8 +3,15 @@ import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import cors from "cors";
+import bodyParser from "body-parser";
+
 import connectDB from "./config/db.js";
+
+// import service routes
 import serviceRoutes from "./routes/service.js";
+
+// import user routes
+import userRoutes from "./routes/user.js";
 
 
 //configure dotenv
@@ -16,8 +23,12 @@ connectDB();
 //invoke express
 const app = express()
 
-// routes middleware
+// body parser middleware
+app.use(bodyParser.json());
+// service routes middleware
 app.use("/service", serviceRoutes);
+// user routes middleware
+app.use("/user", userRoutes);
 // Dev logging middleware
 app.use(morgan('dev'));
 
@@ -26,12 +37,6 @@ app.use(morgan('dev'));
 app.use(cors())
 app.use(express.json())
 
-app.get("/", (req, res) => {
-    res.status(200).json({
-        success: true,
-        message: "welcome to quickfix api"
-    });
-})
 const port = process.env.PORT
 // listen 
 const server = app.listen(port, () => {

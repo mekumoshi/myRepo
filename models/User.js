@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const ServiceSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, "Please add name"],
@@ -28,24 +28,8 @@ const ServiceSchema = new mongoose.Schema({
                 "please add a valid email"
             ]
     },
-    description: {
-        type: String,
-        required: [true, "Please add description"],
-        unique: false,
-        trim: true,
-        maxlength: [100, "description can not be more than 50 characters"]
-    },
-    attachments: {
-        type: String,
-        default: "no-photo.jpg"
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    }
-         
 });
 
-const Service = mongoose.model("Service", ServiceSchema);
+const User = mongoose.model("User", UserSchema);
 
-export default Service;
+export default User;
