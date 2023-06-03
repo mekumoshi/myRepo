@@ -22,9 +22,12 @@ connectDB();
 
 //invoke express
 const app = express()
+app.use(cors())
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 
 // body parser middleware
-app.use(bodyParser.json());
+//app.use(bodyParser.json());
 // service routes middleware
 app.use("/service", serviceRoutes);
 // user routes middleware
@@ -33,9 +36,6 @@ app.use("/user", userRoutes);
 app.use(morgan('dev'));
 
 
-// Mount routers
-app.use(cors())
-app.use(express.json())
 
 const port = process.env.PORT
 // listen 

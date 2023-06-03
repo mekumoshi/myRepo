@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
 const UserSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, "Please add name"],
-        unique: true,
         trim: true,
         maxlength: [50, "Name can not be more than 50 characters"]
     },
@@ -26,8 +26,25 @@ const UserSchema = new mongoose.Schema({
         type: String,
         match: [/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                 "please add a valid email"
-            ]
+            ],
+        unique: true
     },
+    password: {
+        type: String,
+        require: true
+    }
+}, {
+    timestamps: true
+});
+
+// password encryption
+UserSchema.pre("save", async function (next) {
+    if(!this.isModified("password")) {
+        next();
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
 });
 
 const User = mongoose.model("User", UserSchema);
