@@ -3,7 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import cors from "cors";
-import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 
 import connectDB from "./config/db.js";
 
@@ -27,7 +27,9 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
 // body parser middleware
-//app.use(bodyParser.json());
+//app.use(bodyParser.json()
+// cookie-parser middleware
+app.use(cookieParser()); 
 // service routes middleware
 app.use("/service", serviceRoutes);
 // user routes middleware
