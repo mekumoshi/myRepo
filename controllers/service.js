@@ -12,13 +12,19 @@ export const getServices = async (req, res) => {
 }
 
 export const getService = async (req, res) => {
-    const id = req.body.id;
+    const id = req.params.id;
     try {
         const service = await Service.findById(id);
-        res.status(200).json({service});
+        if (service) {
+            res.status(200).json({service});
+        }
     } catch (error) {
         res.status(404).json({message: error.message});
     }
+}
+
+export const updateService = async (req, res) => {
+
 }
 
 export const createService = async (req, res) => {

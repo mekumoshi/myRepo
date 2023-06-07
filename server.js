@@ -27,7 +27,6 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
 // body parser middleware
-//app.use(bodyParser.json()
 // cookie-parser middleware
 app.use(cookieParser()); 
 // service routes middleware

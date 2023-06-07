@@ -71,7 +71,17 @@ export const logoutUser = async (req, res) => {
 
 export const getUserProfile = async (req, res) => {
     try {
-        res.status(200).json({message: "Get User Profile"});
+        const user = await User.findById(req.user._id)
+        if(user) {
+            res.status(200).json({
+                name: user.name,
+                email: user.email,
+                phoneNumber: user.phoneNumber,
+                address: user.address
+            });
+        } else {
+        res.status(404).json({message: "User not found"});
+        }
     } catch(error) {
         res.status(404).json({message: error.message});
     }
