@@ -13,6 +13,9 @@ import serviceRoutes from "./routes/service.js";
 // import user routes
 import userRoutes from "./routes/user.js";
 
+// import technician routes
+import technicianRoutes from "./routes/technician.js";
+
 
 //configure dotenv
 dotenv.config({ path: './config/config.env' })
@@ -33,6 +36,8 @@ app.use(cookieParser());
 app.use("/service", serviceRoutes);
 // user routes middleware
 app.use("/user", userRoutes);
+// technician routes middleware
+app.use("/technician", technicianRoutes)
 // Dev logging middleware
 app.use(morgan('dev'));
 
