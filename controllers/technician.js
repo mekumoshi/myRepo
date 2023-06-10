@@ -1,4 +1,4 @@
-import Technician from "../models/technician.js";
+import Technician from "../models/Technician.js";
 import generateToken from "../utils/generateToken.js";
 
 export const authTechnician = async (req, res) => {
@@ -43,7 +43,7 @@ export const registerTechnician = async (req, res) => {
 
         // check if user created successful
         if(technician) {
-            generateToken(res, user._id);
+            generateToken(res, technician._id);
             res.status(201).json({
                 _id: technician._id,
                 name: technician.name,
@@ -75,7 +75,7 @@ export const logoutTechnician = async (req, res) => {
 
 export const getTechnicianProfile = async (req, res) => {
     try {
-        const technician = await Technician.findById(req.user._id)
+        const technician = await Technician.findById(req.technician._id)
         if(technician) {
             res.status(200).json({
                 name: technician.name,
