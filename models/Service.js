@@ -1,19 +1,16 @@
 import mongoose from "mongoose";
 
 const ServiceSchema = new mongoose.Schema({
-    name: {
+    user_id: {
         type: String,
-        required: [true, "Please add name"],
+        required: [true, "Please add user id"],
         unique: true,
-        trim: true,
-        maxlength: [50, "Name can not be more than 50 characters"]
     },
-    phoneNumber: {
-        type: String,
-        required: [true, "Please add phone number"],
-        unique: false,
-        trim: true,
-        maxlength: [10, "Name can not be more than 10 characters"]
+    technician_id:{
+        type: String
+    },
+    slug: {
+        type: String
     },
     address: {
         type: String,
@@ -22,11 +19,15 @@ const ServiceSchema = new mongoose.Schema({
         trim: true,
         maxlength: [50, "address can not be more than 50 characters"]
     },
-    email: {
+    service_type: {
         type: String,
-        match: [/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                "please add a valid email"
-            ]
+        required: [true, "Please add service type"],
+        trim: true
+    },
+    service_date: {
+        type: Date,
+        required: [true, "Please add date"],
+        default: Date.now()
     },
     description: {
         type: String,
@@ -35,9 +36,29 @@ const ServiceSchema = new mongoose.Schema({
         trim: true,
         maxlength: [100, "description can not be more than 50 characters"]
     },
-    attachments: {
+    status: {
         type: String,
-        default: "no-photo.jpg"
+        required: [true, "Please add status"],
+        enum: ["low", "medium", "high"]
+    },
+    notes: {
+        type: String,
+        trim: true,
+        maxlength: [100, "notes can not be more than 100 characters"]
+    },
+    priority: {
+        type: String,
+        required: [true, "Please add priority level"]
+    },
+    rating: {
+        type: String,
+    },
+    comment: {
+        type: String
+    },
+    photo: {
+        type: String,
+        default: "no-photo"
     },
     createdAt: {
         type: Date,

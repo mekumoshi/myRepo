@@ -8,6 +8,28 @@ const TechnicianSchema = mongoose.Schema({
         trim: true,
         maxlength: [50, "Name can not be more than 50 characters"]
     },
+    gender: {
+        type: String,
+        required: [true, "Please add your gender"],
+        trim: true
+    },
+    experience_year: {
+        type: Number,
+        required: [true, "Please add year of experience"],
+        trim: true
+    },
+    specialization: {
+        type: [String],
+        required: [true, "Add specialization"]
+    },
+    languages: {
+        type: [String],
+        required: [true, "Please add languages"]
+    },
+    availability: {
+        type: String,
+        required: [true, "Add your availability schedule"]
+    },
     phoneNumber: {
         type: String,
         required: [true, "Please add phone number"],
@@ -29,17 +51,17 @@ const TechnicianSchema = mongoose.Schema({
             ],
         unique: true
     },
-    profession: {
-        type: String,
-        required: true,
-    },
-    attachments: {
-        type: String,
+    certification: {
+        type: [String],
         required: true
     },
     password: {
         type: String,
         require: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now()
     }
 }, {
     timestamps: true

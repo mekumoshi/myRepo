@@ -23,7 +23,7 @@ export const authTechnician = async (req, res) => {
 
 export const registerTechnician = async (req, res) => {
     try {
-        const {name, email, phoneNumber, address, password, profession, attachments} = req.body;
+        const {name, gender, experience_year, availability, specialization, certification, email, phoneNumber, address, password } = req.body;
 
         // check if user exists
         const technicianExists = await Technician.findOne({email});
@@ -33,12 +33,15 @@ export const registerTechnician = async (req, res) => {
         // if user don't exists
         const technician = await Technician.create({
             name,
+            gender, 
+            experience_year, 
+            availability, 
+            specialization,
             email,
             password,
             phoneNumber,
             address,
-            profession,
-            attachments
+            certification
         });
 
         // check if user created successful
@@ -50,8 +53,11 @@ export const registerTechnician = async (req, res) => {
                 email: technician.email,
                 phoneNumber: technician.phoneNumber,
                 address: technician.address,
-                profession: technician.technician,
-                attachments: technician.attachments
+                specialization: technician.specialization,
+                experience_year: technician.experience_year,
+                availability: technician.availability,
+                certification: technician.certification,
+                gender: technician.gender
             });
         } else {
             res.status(400).json({message: "Invalid Technician data"});
@@ -82,8 +88,11 @@ export const getTechnicianProfile = async (req, res) => {
                 email: technician.email,
                 phoneNumber: technician.phoneNumber,
                 address: technician.address,
-                profession: technician.profession,
-                attachments: technician.attachments
+                specialization: technician.specialization,
+                experience_year: technician.experience_year,
+                availability: technician.availability,
+                certification: technician.certification,
+                gender: technician.gender
             });
         } else {
         res.status(404).json({message: "Technician not found"});
@@ -103,7 +112,11 @@ export const updateTechnicianProfile = async (req, res) => {
             technician.email = req.body.email || technician.email;
             technician.phoneNumber = req.body.phoneNumber || technician.phoneNumber;
             technician.address = req.body.address || technician.address;
-            technician.profession = req.body.profession || technician.profession
+            technician.specialization = req.body.specialization || technician.specialization;
+            technician.experience_year = req.body.experience_year || technician.experience_year;
+            technician.availability = req.body.availability || technician.availability;
+            technician.certification = req.body.certification || technician.certification;
+            technician.gender = req.body.gender || technician.gender
             if (req.body.password) {
                 technician.password = req.body.password;
             }
@@ -114,13 +127,25 @@ export const updateTechnicianProfile = async (req, res) => {
                 email: updatedTechnician.email,
                 phoneNumber: updatedTechnician.phoneNumber,
                 address: updatedTechnician.address,
-                profession: updatedTechnician.profession,
-                attachments: updatedTechnician.attachments
+                specialization: technician.specialization,
+                experience_year: technician.experience_year,
+                availability: technician.availability,
+                certification: technician.certification,
+                gender: technician.gender
             });
         } else {
             res.status(404).json({message: "Technician not found"});
         }
     } catch(error) {
         res.status(409).json({message: error.message});
+    }
+}
+
+export const getAllTechnicians = async (req, res) => {
+    try {
+        const technicians = await Technician.find();
+        res.status(200).json({technicians});
+    } catch(error) {
+        res.status(500).json({ message: error.message });
     }
 }

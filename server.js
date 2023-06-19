@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import fileUpload from "express-fileupload";
 
 import connectDB from "./config/db.js";
 
@@ -27,6 +28,8 @@ connectDB();
 const app = express()
 app.use(cors())
 app.use(express.json())
+// file upload middleware
+app.use(fileUpload());
 app.use(express.urlencoded({extended: true}))
 
 // body parser middleware

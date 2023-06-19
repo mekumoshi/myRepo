@@ -22,6 +22,11 @@ const UserSchema = new mongoose.Schema({
         trim: true,
         maxlength: [50, "address can not be more than 50 characters"]
     },
+    role: {
+        type: String,
+        enum: ["user", "technician"],
+        default: "user"
+    },
     email: {
         type: String,
         match: [/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -31,7 +36,14 @@ const UserSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        require: true
+        require: true,
+        minlength: 6
+    },
+    resetPasswordToken: String,
+    resetPasswordExpire: Date,
+    createdAt: {
+        type: Date,
+        default: Date.now()
     }
 }, {
     timestamps: true

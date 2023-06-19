@@ -5,7 +5,7 @@ const router = express.Router();
 
 //router.get("/", getServices);
 //router.post("/", createService);
-router.route("/").get(protect, getServices).post(protect, createService);
-router.route("/:id").get(protect, getService).put(protect, updateService);
+router.route("/").get(getServices).post(protect, createService);
+router.route("/:id").get(getService).put(protect, updateService);
 
 export default router;
